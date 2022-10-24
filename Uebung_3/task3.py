@@ -22,7 +22,7 @@ def main():
     cylinderSource = vtkCylinderSource()
     cylinderSource.SetCenter(0.0, 0.0, 0.0)
     cylinderSource.SetRadius(0.5)
-    cylinderSource.SetHeight(1.0)
+    cylinderSource.SetHeight(10)
     cylinderSource.SetResolution(500)
     
     # Create a mapper and actor
@@ -32,6 +32,23 @@ def main():
     #actor.GetProperty().SetColor(colors.GetColor3d('Cornsilk'))
     actor.GetProperty().SetColor(colors.GetColor3d('LightGreen'))
     actor.SetMapper(mapper)
+    actor.RotateX(45.0)
+
+    # Create second sphere
+    cylinderSource2 = vtkCylinderSource()
+    #cylinderSource2.SetCenter(cylinderSource.GetRadius() + 2.0, 0.0, 0.0)
+    cylinderSource2.SetCenter(0.0, 0.0, 0.0)
+    cylinderSource2.SetRadius(0.5)
+    cylinderSource2.SetHeight(10)
+    cylinderSource2.SetResolution(500)
+
+    # Create second mapper and actor
+    mapper2 = vtkPolyDataMapper()
+    mapper2.SetInputConnection(cylinderSource2.GetOutputPort())
+    actor2 = vtkActor()
+    actor2.GetProperty().SetColor(colors.GetColor3d('DarkGreen'))
+    actor2.SetMapper(mapper2)
+    actor2.RotateY(45.0)
 
     # Create a renderer, render window, and interactor
     renderer = vtkRenderer()
@@ -43,6 +60,7 @@ def main():
 
     # Add the actors to the scene
     renderer.AddActor(actor)
+    renderer.AddActor(actor2)
     renderer.SetBackground(colors.GetColor3d('DarkBlue'))
 
     # Render and interact
